@@ -1,0 +1,28 @@
+name: Develop
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 11
+
+      - name: working compilation
+        run: ./gradlew compileKotlin
+        env:
+          USE_OLD_BACKEND: true
+
+      - name: failing compilation
+        run: ./gradlew compileKotlin
+        env:
+          USE_OLD_BACKEND: false
